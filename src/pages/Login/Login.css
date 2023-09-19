@@ -1,0 +1,10 @@
+/* .login-form {
+  display: flex;
+  flex-direction: column;
+} */
+
+.login-form__upperWrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(233, 238, 208);
+}
