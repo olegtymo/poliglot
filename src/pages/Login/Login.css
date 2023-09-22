@@ -1,10 +1,26 @@
-/* .login-form {
-  display: flex;
-  flex-direction: column;
-} */
+.login__form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.login-form__upperWrapper > input {
+  border: none;
+  border-bottom: 1px solid #9ccf62;
+}
+.login-form__upperWrapper > input {
+  outline: none;
+}
+.login-form__upperWrapper > label {
+  margin: 0 auto;
+}
 
 .login-form__upperWrapper {
   display: flex;
   flex-direction: column;
   background-color: rgb(233, 238, 208);
+}
+.login-form__lowerWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

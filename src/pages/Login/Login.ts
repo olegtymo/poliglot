@@ -59,8 +59,12 @@ export default class Login implements Page {
 
   // LoginForm.prototype.render
   render(parent: HTMLElement) {
-    this.elements.form?.classList.add('login-form');
+    this.elements.form?.classList.add('login__form');
     this.elements.upperWrapper?.classList.add('login-form__upperWrapper');
+    this.elements.lowerWrapper?.classList.add('login-form__lowerWrapper');
+
+    this.elements.usernameLabel.classList.add('login__usernameLabel');
+    this.elements.userpassLabel.classList.add('login__userpassLabel');
 
     this.elements.usernameLabel.htmlFor = 'username';
     this.elements.usernameLabel.innerHTML = '<b>E-mail</b>';

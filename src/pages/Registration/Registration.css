@@ -1,5 +1,18 @@
-.signup-form{
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(233, 238, 208)
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(233, 238, 208);
+  max-width: 400px;
+  margin: 0 auto;
+}
+.signup-form > input {
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+.signup-form > input {
+  outline: none;
+}
+.signup-form > div,
+.signup-form > label {
+  margin: 0 auto;
 }

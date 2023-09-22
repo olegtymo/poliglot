@@ -23,9 +23,7 @@ export default class Header {
   }
   render() {
     this.elements.title = this.title;
-
     this.elements.self?.append(this.elements.title);
-
     this.handleAuthChange();
   }
 
@@ -38,7 +36,6 @@ export default class Header {
     } else {
       this.loginBtn.remove();
       this.registrationBtn.remove();
-
       this.logoutBtn.render(this.elements.self);
     }
   }

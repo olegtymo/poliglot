@@ -23,14 +23,8 @@ export default class LogoutBtn {
 
   async handleClick(e: Event) {
     await signOut(getAuth());
-
     console.log('You have signed out');
-    // Router.navigate(_ROUTES_NAMES.HOME);
-
-    // const errorCode = error.code;
-    // const errorMessage = error.message;
-    // console.error(error);
-    // alert(`Something went wrong: ${errorCode} - ${errorMessage}`);
+    
   }
 
   remove() {

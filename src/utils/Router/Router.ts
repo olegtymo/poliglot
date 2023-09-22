@@ -1,32 +1,34 @@
-import { User } from "firebase/auth";
+import { User } from 'firebase/auth';
 
-import { Header } from "@/components";
-import { Home, Login, NotFound } from "@/pages";
-import { Page } from "@/types";
+import { Header } from '@/components';
+import { Home, Login, NotFound } from '@/pages';
+import { Page } from '@/types';
 
-import { _ROUTES_NAMES, _ROUTES_URLS } from "./types";
-import Registration from "@/pages/Registration/Registration";
+import { _ROUTES_NAMES, _ROUTES_URLS } from './types';
+import Registration from '@/pages/Registration/Registration';
 
 const protectedRoutes = [_ROUTES_URLS.home];
 
 export default class Router {
-  static root: HTMLElement | null = document.getElementById("app");
+  static root: HTMLElement | null = document.getElementById('app');
   static header: Header | null = null;
 
   static user: User | null = null;
 
   static pages = new Map<string, Page>();
+
   static protectedRoutes: string[] = [_ROUTES_URLS.home];
 
   static navigate(route: _ROUTES_NAMES) {
     if (protectedRoutes.includes(route) && !Router.user) {
-      throw new Error("Protected route!");
+      throw new Error('Protected route!');
     }
 
     this.clearRootElement();
     const page = this.getPage(route);
 
     page.render(Router.root);
+    console.log(Router.pages);
   }
 
   static clearRootElement() {
@@ -35,7 +37,7 @@ export default class Router {
 
   static getPage(route: _ROUTES_NAMES) {
     if (!(route in _ROUTES_NAMES)) {
-      throw new Error("Route not found");
+      throw new Error('Route not found');
     }
 
     let page;
