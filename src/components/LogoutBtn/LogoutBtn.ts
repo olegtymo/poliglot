@@ -22,9 +22,11 @@ export default class LogoutBtn {
   }
 
   async handleClick(e: Event) {
-    await signOut(getAuth());
+    Router.clearPages();
+    console.log('cleaned page', Router.pages);
     console.log('You have signed out');
-    
+
+    await signOut(getAuth());
   }
 
   remove() {

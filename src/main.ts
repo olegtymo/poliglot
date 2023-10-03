@@ -1,11 +1,11 @@
-import { onAuthStateChanged, getAuth } from "firebase/auth";
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
-import { Header } from "@/components";
-import { Router, _ROUTES_NAMES } from "@/utils";
+import { Header } from '@/components';
+import { Router, _ROUTES_NAMES } from '@/utils';
 
-import "./style.css";
+import './style.css';
 
-const header = new Header(document.getElementById("pageTop"), "");
+const header = new Header(document.getElementById('pageTop'), '');
 header.render();
 
 onAuthStateChanged(getAuth(), (user) => {

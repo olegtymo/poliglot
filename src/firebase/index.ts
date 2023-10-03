@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { collection } from 'firebase/firestore';
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 const firebaseConfig = {
@@ -16,6 +17,8 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getDatabase(app);
 export const auth = getAuth();
+
+
 
 onAuthStateChanged(auth, (user) => {
   console.log(user);

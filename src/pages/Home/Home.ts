@@ -10,49 +10,56 @@ import './Home.css';
 type TypeElements = {
   wrapper: HTMLDivElement;
   centerBox: HTMLDivElement;
+  addWordBtn: Button;
+  addFolderBtn: Button;
 };
 
 export default class Home implements Page {
   elements: TypeElements;
+  modal: Modal;
+  wordForm: NewWordForm;
+  folderForm: NewFolderForm;
 
   constructor() {
+    this.modal = new Modal();
+    const handleModalClose = () => this.modal.close()
+    
+    this.wordForm = new NewWordForm({
+      onClose: handleModalClose
+    });
+    this.folderForm = new NewFolderForm({
+      onClose: handleModalClose
+    });
+
     this.elements = {
       wrapper: document.createElement('div'),
       centerBox: document.createElement('div'),
+      addWordBtn: new Button({
+        children: Icons.Plus({ width: '50px' }),
+        className: 'home__btn',
+        onClick: () => {
+          this.modal.setContent(this.wordForm);
+          this.modal.render(this.elements.wrapper);
+        },
+      }),
+      addFolderBtn: new Button({
+        children: Icons.Folder({ width: '50px' }),
+        className: 'home__btn',
+        onClick: () => {
+          this.modal.setContent(this.folderForm);
+          this.modal.render(this.elements.wrapper);
+        },
+      }),
     };
     this.elements.wrapper.classList.add('home__wrapper');
   }
 
   render(parent: HTMLDivElement | Element | HTMLElement | null) {
-    const addWordBtn = new Button({
-      children: Icons.Plus({ width: '50px' }),
-      className: 'home__btn',
-      onClick: () => {
-        const newModal = new Modal();
-        newModal.render(this.elements.wrapper);
-        const wordForm = new NewWordForm();
-        wordForm.render(newModal.elements.dialog);
-
-        console.dir(newModal.elements.dialog);
-        console.log('you clicked plus');
-      },
-    });
-    addWordBtn.render(this.elements.wrapper);
+    this.elements.addWordBtn.render(this.elements.wrapper);
 
     this.elements.wrapper.append(this.elements.centerBox);
 
-    const addFolderBtn = new Button({
-      children: Icons.Folder({ width: '50px' }),
-      className: 'home__btn',
-      onClick: () => {
-        const newModal = new Modal();
-        newModal.render(this.elements.wrapper);
-        const folderForm = new NewFolderForm();
-        folderForm.render(newModal.elements.dialog);
-        console.log('you clicked folder button');
-      },
-    });
-    addFolderBtn.render(this.elements.wrapper);
+    this.elements.addFolderBtn.render(this.elements.wrapper);
 
     parent?.append(this.elements.wrapper);
   }

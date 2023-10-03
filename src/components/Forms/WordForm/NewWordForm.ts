@@ -1,30 +1,56 @@
+import { Button } from '@/components';
+
 import './NewWordForm.css';
 type TypeElements = {
   form: HTMLFormElement;
+  // parent: Element | null | HTMLDialogElement,
   wordInput: HTMLInputElement;
   translationInput: HTMLInputElement;
   sampleInput: HTMLInputElement;
   uploadImageInput: HTMLInputElement;
-  uploadImageButton: HTMLButtonElement;
-  saveButton: HTMLButtonElement;
-  cancelButton: HTMLButtonElement;
+  uploadImageButton: Button;
+  saveButton: Button;
+  cancelButton: Button;
+};
+type TypeProps = {
+  onClose: Function;
 };
 
 export default class NewWordForm {
+  onClose: Function;
   elements: TypeElements;
-  constructor() {
+  //TODO: make modal closing work
+  constructor({ onClose }: TypeProps) {
+    this.onClose = onClose;
     this.elements = {
       form: document.createElement('form'),
       wordInput: document.createElement('input'),
       translationInput: document.createElement('input'),
       sampleInput: document.createElement('input'),
       uploadImageInput: document.createElement('input'),
-      uploadImageButton: document.createElement('button'),
-      saveButton: document.createElement('button'),
-      cancelButton: document.createElement('button'),
+      uploadImageButton: new Button({
+        text: 'Choose an image',
+        onClick: (e: Event) => {
+          this.uploadImgByClick(e);
+        },
+      }),
+      saveButton: new Button({
+        text: 'Save',
+        className: 'saveBtn',
+        onClick: (e: Event) => {},
+      }),
+      cancelButton: new Button({
+        text: 'Cancel',
+        className: 'cancelBtn',
+        onClick: (e: Event) => {
+          this.closeForm(e);
+        },
+      }),
     };
   }
+
   render(parent: Element | null | HTMLDialogElement) {
+    this.parent = parent;
     this.elements.wordInput.type = 'text';
     this.elements.wordInput.placeholder = 'in English';
 
@@ -38,35 +64,31 @@ export default class NewWordForm {
 
     this.elements.uploadImageInput.hidden = true;
 
-    this.elements.uploadImageButton.textContent = 'Choose an image';
-    this.elements.saveButton.textContent = 'Save';
-    this.elements.cancelButton.textContent = 'Cancel';
-
-    this.elements.uploadImageButton.addEventListener('click', (e) => {
-      this.uploadImgByClick(e);
-    });
-    this.elements.saveButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      parent?.close();
-    });
-    this.elements.cancelButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      parent?.close();
-    });
-
     this.elements.form.append(
       this.elements.wordInput,
       this.elements.translationInput,
       this.elements.sampleInput,
       this.elements.uploadImageInput,
-      this.elements.uploadImageButton,
-      this.elements.saveButton,
-      this.elements.cancelButton,
     );
-    parent?.append(this.elements.form);
+
+    this.elements.uploadImageButton.render(this.elements.form),
+      this.elements.saveButton.render(this.elements.form),
+      this.elements.cancelButton.render(this.elements.form),
+      this.parent?.append(this.elements.form);
   }
+
   uploadImgByClick(e: Event) {
     e.preventDefault();
     this.elements.uploadImageInput.click();
+  }
+
+  submitForm(e: Event) {
+    e.preventDefault();
+    this.onClose();
+  }
+
+  closeForm(e: Event) {
+    e.preventDefault();
+    this.onClose();
   }
 }

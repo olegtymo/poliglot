@@ -28,11 +28,15 @@ export default class Router {
     const page = this.getPage(route);
 
     page.render(Router.root);
-    console.log(Router.pages);
+    console.log('pages in router --> ', Router.pages);
   }
 
   static clearRootElement() {
     this.root?.replaceChildren();
+  }
+
+  static clearPages() {
+    this.pages.clear();
   }
 
   static getPage(route: _ROUTES_NAMES) {
