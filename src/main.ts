@@ -14,7 +14,7 @@ onAuthStateChanged(getAuth(), (user) => {
   if (!Router.user) {
     Router.navigate(_ROUTES_NAMES.LOGIN);
   } else {    
-    // TODO: check last route and update last route
+    // TODO: check last route and update last route to make it work after page reload
     Router.navigate(_ROUTES_NAMES.HOME);
   }
 
