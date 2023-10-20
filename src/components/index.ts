@@ -6,4 +6,6 @@ export { default as PopUp } from './PopUp/PopUp';
 export { default as Icons } from './Icons';
 export { default as Button } from './Button';
 export { default as Modal } from './Modal/Modal';
+export { default as WordCard } from './WordCard/WordCard';
+export { default as FolderCard } from './FolderCard/FolderCard';
 export * from './Forms';

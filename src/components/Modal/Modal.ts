@@ -32,5 +32,6 @@ export default class Modal {
 
   close() {
     this.elements.dialog.close();
+    this.elements.contentWrapper.innerHTML = '';
   }
 }

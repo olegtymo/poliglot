@@ -1,0 +1,15 @@
+.headerWrapper,
+.contentWrapper {
+  display: flex;
+  text-align: center;
+}
+
+.contentWrapper > div {
+  display: flex;
+}
+.contentWrapper {
+  flex-wrap: wrap;
+  flex-direction: column;
+  background-color: #d7f1aa;
+  gap: 5px;
+}

@@ -1,0 +1,12 @@
+.folderCard {
+  display: grid;
+  grid-template-columns: 20px auto;
+  border: solid 1px #000;
+  border-bottom: none;
+  align-items: center;
+}
+.folderCard > p {
+  margin: 0;
+}
+
+

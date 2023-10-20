@@ -1,4 +1,6 @@
 import { Button } from '@/components';
+import { saveFolder } from '@/firebase/API';
+import { Router, _ROUTES_NAMES } from '@/utils';
 
 import './NewFolderForm.css';
 type TypeElements = {
@@ -14,6 +16,7 @@ type TypeProps = {
 export default class NewFolderForm {
   elements: TypeElements;
   onClose: Function;
+  parent: Element | null;
 
   //TODO: make modal closing work
   constructor({ onClose }: TypeProps) {
@@ -51,7 +54,15 @@ export default class NewFolderForm {
   }
   submitForm(e: Event) {
     e.preventDefault();
+    const folderObj = {
+      name: this.elements.folderInput.value,
+      owner: Router.user?.uid,
+    };
+    saveFolder(folderObj);
+    this.elements.folderInput.value = '';
+
     this.onClose();
+    Router.navigate(_ROUTES_NAMES.HOME)
   }
   closeForm(e: Event) {
     e.preventDefault();

@@ -13,7 +13,8 @@ onAuthStateChanged(getAuth(), (user) => {
 
   if (!Router.user) {
     Router.navigate(_ROUTES_NAMES.LOGIN);
-  } else {
+  } else {    
+    // TODO: check last route and update last route
     Router.navigate(_ROUTES_NAMES.HOME);
   }
 

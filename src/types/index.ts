@@ -10,3 +10,13 @@ export type Populated = {
    */
   [k: string]: any;
 };
+
+export type WordCardType = {
+  inEnglish: string;
+  translation: string;
+  sample: string;
+};
+export type FolderCardType = {
+  name: string;
+  owner: string;
+};

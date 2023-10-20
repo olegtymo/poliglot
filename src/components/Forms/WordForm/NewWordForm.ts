@@ -1,13 +1,17 @@
 import { Button } from '@/components';
+import { saveWord } from '@/firebase/API';
+import { Router } from '@/utils';
+import { getFolders } from '@/firebase/API';
 
 import './NewWordForm.css';
+
 type TypeElements = {
   form: HTMLFormElement;
-  // parent: Element | null | HTMLDialogElement,
   wordInput: HTMLInputElement;
   translationInput: HTMLInputElement;
   sampleInput: HTMLInputElement;
   uploadImageInput: HTMLInputElement;
+  foldersSelect: HTMLSelectElement;
   uploadImageButton: Button;
   saveButton: Button;
   cancelButton: Button;
@@ -19,8 +23,9 @@ type TypeProps = {
 export default class NewWordForm {
   onClose: Function;
   elements: TypeElements;
-  //TODO: make modal closing work
+  parent: Element | null | HTMLDialogElement;
   constructor({ onClose }: TypeProps) {
+    this.parent = null;
     this.onClose = onClose;
     this.elements = {
       form: document.createElement('form'),
@@ -28,6 +33,7 @@ export default class NewWordForm {
       translationInput: document.createElement('input'),
       sampleInput: document.createElement('input'),
       uploadImageInput: document.createElement('input'),
+      foldersSelect: document.createElement('select'),
       uploadImageButton: new Button({
         text: 'Choose an image',
         onClick: (e: Event) => {
@@ -37,7 +43,9 @@ export default class NewWordForm {
       saveButton: new Button({
         text: 'Save',
         className: 'saveBtn',
-        onClick: (e: Event) => {},
+        onClick: (e: Event) => {
+          this.submitForm(e);
+        },
       }),
       cancelButton: new Button({
         text: 'Cancel',
@@ -64,11 +72,14 @@ export default class NewWordForm {
 
     this.elements.uploadImageInput.hidden = true;
 
+    this.renderSelectOnly();
+
     this.elements.form.append(
       this.elements.wordInput,
       this.elements.translationInput,
       this.elements.sampleInput,
       this.elements.uploadImageInput,
+      this.elements.foldersSelect,
     );
 
     this.elements.uploadImageButton.render(this.elements.form),
@@ -76,14 +87,45 @@ export default class NewWordForm {
       this.elements.cancelButton.render(this.elements.form),
       this.parent?.append(this.elements.form);
   }
+  async renderSelectOnly() {
+    const defaultOption = document.createElement('option');
+    defaultOption.textContent = '--Please choose a folder--';
+    this.elements.foldersSelect.append(defaultOption);
+
+    const data = await getFolders();
+    data.forEach((folder) => {
+      const folderOption = document.createElement('option');
+      folderOption.value = folder.name;
+      folderOption.textContent = folder.name;
+      this.elements.foldersSelect.append(folderOption);
+    });
+  }
 
   uploadImgByClick(e: Event) {
     e.preventDefault();
     this.elements.uploadImageInput.click();
   }
 
-  submitForm(e: Event) {
+  async submitForm(e: Event) {
     e.preventDefault();
+    if (
+      this.elements.wordInput.value.length === 0 ||
+      this.elements.translationInput.value.length === 0 ||
+      this.elements.sampleInput.value.length === 0
+    ) {
+      console.log('Please input any data into fields');
+      return null;
+    } else {
+      const wordObj: { [key: string]: string | any } = {
+        inEnglish: this.elements.wordInput.value,
+        translation: this.elements.translationInput.value,
+        sample: this.elements.sampleInput.value,
+        owner: Router.user?.uid,
+      };
+      console.log(Router.user);
+      saveWord(wordObj);
+    }
+
     this.onClose();
   }
 

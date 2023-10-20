@@ -1,0 +1,14 @@
+.wordCard {
+  display: grid;
+  grid-template-columns: 20% 20% 60%;
+  text-align: center;
+  border: solid 1px #000;
+  border-bottom: none;
+}
+.wordCard > div:nth-child(even) {
+  border-right: solid 1px #000;
+  border-left: solid 1px #000;
+}
+.wordCard:last-child {
+  border-bottom: solid 1px #000;
+}

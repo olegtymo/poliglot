@@ -2,3 +2,10 @@
   display: flex;
   justify-content: space-around;
 }
+.wordsBox {
+  display: flex;
+}
+.home__centerBox {
+  flex-grow: 1;
+  max-width: 900px;
+}
