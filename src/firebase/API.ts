@@ -8,20 +8,25 @@ import {
   query,
   where,
   limit,
-} from 'firebase/firestore';
+} from "firebase/firestore";
 
-import { app } from './firebase.js';
+import { PopUp } from "@/components";
+
+import { app } from "./firebase.js";
 
 const db = getFirestore(app);
 
-const wordsCollectionRef = collection(db, 'words');
-const foldersCollectionRef = collection(db, 'folders');
+const wordsCollectionRef = collection(db, "words");
+const foldersCollectionRef = collection(db, "folders");
 
 //TODO: use currentUser ID to fetch all the data, because you need to show only user's words to him
 
 export const getWord = async (title: String) => {
   // const currentUser = Router.user
-  const result = await query(wordsCollectionRef, where('inEnglish', '==', title));
+  const result = await query(
+    wordsCollectionRef,
+    where("inEnglish", "==", title)
+  );
   const querySnapshot = await getDocs(result);
 
   if (querySnapshot.docs.length === 0) {
@@ -43,7 +48,7 @@ export const getWords = async () => {
 export const saveWord = async (obj: { [key: string]: string }) => {
   const checkWord = await getWord(obj.inEnglish);
   if (checkWord !== null) {
-    return 'The word has already exist';
+    return "The word has already exist";
   } else {
     await addDoc(wordsCollectionRef, obj);
   }
@@ -51,12 +56,13 @@ export const saveWord = async (obj: { [key: string]: string }) => {
 
 export const getFolder = async (title: String) => {
   // const currentUser = Router.user
-  const result = await query(foldersCollectionRef, where('name', '==', title));
+  const result = await query(foldersCollectionRef, where("name", "==", title));
   const querySnapshot = await getDocs(result);
 
   if (querySnapshot.docs.length === 0) {
     return null;
   }
+  // console.log(querySnapshot.docs[0].data());
   return querySnapshot.docs[0].data();
 };
 
@@ -70,10 +76,12 @@ export const getFolders = async () => {
   return foldersArr;
 };
 
-export const saveFolder = async (obj: { [key: string]: string | undefined }) => {
+export const saveFolder = async (obj: {
+  [key: string]: string | undefined;
+}) => {
   const checkFolder = await getFolder(obj.name);
-
-  if (checkFolder !== null) throw new ReferenceError('The folder has already exist');
-
+  if (checkFolder !== null) {
+    throw new ReferenceError("The folder has already exist");
+  }
   await addDoc(foldersCollectionRef, obj);
 };

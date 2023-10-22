@@ -1,9 +1,9 @@
-import { Button } from '@/components';
-import { saveWord } from '@/firebase/API';
-import { Router } from '@/utils';
-import { getFolders } from '@/firebase/API';
+import { Button } from "@/components";
+import { saveWord } from "@/firebase/API";
+import { Router } from "@/utils";
+import { getFolders } from "@/firebase/API";
 
-import './NewWordForm.css';
+import "./NewWordForm.css";
 
 type TypeElements = {
   form: HTMLFormElement;
@@ -28,28 +28,28 @@ export default class NewWordForm {
     this.parent = null;
     this.onClose = onClose;
     this.elements = {
-      form: document.createElement('form'),
-      wordInput: document.createElement('input'),
-      translationInput: document.createElement('input'),
-      sampleInput: document.createElement('input'),
-      uploadImageInput: document.createElement('input'),
-      foldersSelect: document.createElement('select'),
+      form: document.createElement("form"),
+      wordInput: document.createElement("input"),
+      translationInput: document.createElement("input"),
+      sampleInput: document.createElement("input"),
+      uploadImageInput: document.createElement("input"),
+      foldersSelect: document.createElement("select"),
       uploadImageButton: new Button({
-        text: 'Choose an image',
+        text: "Choose an image",
         onClick: (e: Event) => {
           this.uploadImgByClick(e);
         },
       }),
       saveButton: new Button({
-        text: 'Save',
-        className: 'saveBtn',
+        text: "Save",
+        className: "saveBtn",
         onClick: (e: Event) => {
           this.submitForm(e);
         },
       }),
       cancelButton: new Button({
-        text: 'Cancel',
-        className: 'cancelBtn',
+        text: "Cancel",
+        className: "cancelBtn",
         onClick: (e: Event) => {
           this.closeForm(e);
         },
@@ -59,16 +59,16 @@ export default class NewWordForm {
 
   render(parent: Element | null | HTMLDialogElement) {
     this.parent = parent;
-    this.elements.wordInput.type = 'text';
-    this.elements.wordInput.placeholder = 'in English';
+    this.elements.wordInput.type = "text";
+    this.elements.wordInput.placeholder = "in English";
 
-    this.elements.translationInput.type = 'text';
-    this.elements.translationInput.placeholder = 'translation';
+    this.elements.translationInput.type = "text";
+    this.elements.translationInput.placeholder = "translation";
 
-    this.elements.sampleInput.type = 'text';
-    this.elements.sampleInput.placeholder = 'sample';
+    this.elements.sampleInput.type = "text";
+    this.elements.sampleInput.placeholder = "sample";
 
-    this.elements.uploadImageInput.type = 'file';
+    this.elements.uploadImageInput.type = "file";
 
     this.elements.uploadImageInput.hidden = true;
 
@@ -79,7 +79,7 @@ export default class NewWordForm {
       this.elements.translationInput,
       this.elements.sampleInput,
       this.elements.uploadImageInput,
-      this.elements.foldersSelect,
+      this.elements.foldersSelect
     );
 
     this.elements.uploadImageButton.render(this.elements.form),
@@ -88,13 +88,14 @@ export default class NewWordForm {
       this.parent?.append(this.elements.form);
   }
   async renderSelectOnly() {
-    const defaultOption = document.createElement('option');
-    defaultOption.textContent = '--Please choose a folder--';
+    this.elements.foldersSelect.innerHTML = "";
+    const defaultOption = document.createElement("option");
+    defaultOption.textContent = "--Please choose a folder--";
     this.elements.foldersSelect.append(defaultOption);
 
     const data = await getFolders();
     data.forEach((folder) => {
-      const folderOption = document.createElement('option');
+      const folderOption = document.createElement("option");
       folderOption.value = folder.name;
       folderOption.textContent = folder.name;
       this.elements.foldersSelect.append(folderOption);
@@ -113,7 +114,7 @@ export default class NewWordForm {
       this.elements.translationInput.value.length === 0 ||
       this.elements.sampleInput.value.length === 0
     ) {
-      console.log('Please input any data into fields');
+      console.log("Please input any data into fields");
       return null;
     } else {
       const wordObj: { [key: string]: string | any } = {
