@@ -49,8 +49,7 @@ export const saveWord = async (obj: { [key: string]: string }) => {
   }
 };
 
-export const getFolder = async (title: String) => {
-  // const currentUser = Router.user
+export const getFolder = async (title: String) => {  
   const result = await query(foldersCollectionRef, where('name', '==', title));
   const querySnapshot = await getDocs(result);
 
