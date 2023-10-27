@@ -1,12 +1,19 @@
 .folderCard {
-  display: grid;
-  grid-template-columns: 20px auto;
+  /* display: grid; */
+  /* grid-template-columns: 20px auto; */
   border: solid 1px #000;
   border-bottom: none;
-  align-items: center;
+  /* align-items: center; */
 }
-.folderCard > p {
+a > p {
   margin: 0;
 }
-
-
+.folderCard > a {
+  display: block;
+  display: grid;
+  grid-template-columns: 20px auto;
+  align-items: center;
+}
+.folderCard:hover {
+  background-color: rgb(125, 248, 205);
+}

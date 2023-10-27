@@ -52,27 +52,25 @@ export default class NewFolderForm {
 
     this.parent?.append(this.elements.form);
   }
-  submitForm(e: Event) {
+  async submitForm(e: Event) {
     e.preventDefault();
     const folderObj = {
       name: this.elements.folderInput.value,
       owner: Router.user?.uid,
     };
 
-    if (getFolder(folderObj.name) !== null) {
-      if (folderObj.name === '') {
-        new PopUp({
-          message: 'The input field shouldn`t be empty',
-          parent: 'app',
-          theme: 'danger',
-        });
-      } else {
-        new PopUp({
-          message: 'The folder with same name has already exist',
-          parent: 'app',
-          theme: 'danger',
-        });
-      }
+    if ((await getFolder(folderObj.name)) !== null) {
+      new PopUp({
+        message: 'The folder with same name has already exist',
+        parent: 'app',
+        theme: 'danger',
+      });
+    } else if (folderObj.name === '') {
+      new PopUp({
+        message: 'The input field shouldn`t be empty',
+        parent: 'app',
+        theme: 'danger',
+      });
     } else {
       saveFolder(folderObj);
       this.elements.folderInput.value = '';

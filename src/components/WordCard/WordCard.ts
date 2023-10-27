@@ -3,7 +3,7 @@ type TypeWordCardProps = {
   inEnglish?: string;
   translation?: string;
   sample?: string;
-  customClass?: string;
+  id?: string;
 };
 type TypeWordCardElements = {
   wrapperDIV: HTMLDivElement;
@@ -20,11 +20,15 @@ export default class WordCard {
   elements: TypeWordCardElements;
   parent?: HTMLDivElement;
 
-  constructor({ inEnglish, translation, sample, customClass = 'wordCard' }: TypeWordCardProps) {
+  constructor(
+    { inEnglish, translation, sample, id }: TypeWordCardProps,
+    customClass: string = 'wordCard',
+  ) {
     this.inEnglish = inEnglish;
     this.translation = translation;
     this.sample = sample;
     this.styles = customClass;
+    // this.id = id;
 
     this.elements = {
       wrapperDIV: document.createElement('div'),

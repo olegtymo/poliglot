@@ -35,8 +35,11 @@ export default class MainTable {
     this.elements.headerWrapper.replaceChildren();
     this.elements.contentWrapper.replaceChildren();
 
+    this.elements.contentWrapper.addEventListener('click', (e: Event) => {
+      this.getItemID(e);
+    });
+
     this.parent = parent;
-    // this.renderHeader();
     this.renderContent();
     this.parent.append(this.elements.headerWrapper, this.elements.contentWrapper);
   }
@@ -58,22 +61,21 @@ export default class MainTable {
   renderContent() {
     this.foldersFromDB?.forEach((el) => {
       const newCard = new FolderCard({
-        //entity: el
+        id: el.id,
         text: el.name,
         imgSVG: Icons.Folder({ width: '20px' }),
       });
       newCard.render(this.elements.contentWrapper);
     });
     this.wordsFromDB?.forEach((el) => {
-      const newCard = new WordCard(
-        //el
-        {
-          inEnglish: el.inEnglish,
-          translation: el.translation,
-          sample: el.sample,
-        },
-      );
+      // console.log(el);
+      const newCard = new WordCard(el);
       newCard.render(this.elements.contentWrapper);
     });
+  }
+  getItemID(e: Event) {
+    e.preventDefault();
+    
+    console.log(e);
   }
 }
